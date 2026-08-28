@@ -7,6 +7,8 @@
         public string AwayTeam { get;set;} = string.Empty;
         public DateTime MatchDate { get;set;}
         public Guid StadiumId { get;set;}
+        public Stadium Stadium { get;set;} =null!;
+        public ICollection<TicketType> TicketTypes { get;set;} = new List<TicketType>();
         public enum Status { };
         public DateTime CreatedAt { get;set;}
 
