@@ -3,7 +3,7 @@
     public class Ticket
     {
         public Guid Id { get;set;}
-        public Guid TicketTypesId { get;set;}
+        public Guid TicketTypeId { get;set;}
         public Guid OrderId { get;set;}
         public string QrCode { get;set;} = string.Empty;
         public int TicketNumber { get;set;}

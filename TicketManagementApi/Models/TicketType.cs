@@ -1,6 +1,6 @@
 ﻿namespace TicketManagementApi.Models
 {
-    public class TicketTypes
+    public class TicketType
     {
         public Guid Id { get;set;}
         public Guid MatchId { get;set;}
