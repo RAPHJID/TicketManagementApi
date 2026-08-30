@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using TicketManagementApi.Data;
 using TicketManagementApi.Mapping;
+using TicketManagementApi.Services;
+using TicketManagementApi.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddScoped<IMatch, MatchService>();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
