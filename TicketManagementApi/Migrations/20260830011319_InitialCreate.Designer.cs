@@ -12,7 +12,7 @@ using TicketManagementApi.Data;
 namespace TicketManagementApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260828042017_InitialCreate")]
+    [Migration("20260830011319_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,7 +48,12 @@ namespace TicketManagementApi.Migrations
                     b.Property<Guid>("StadiumId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StadiumId");
 
                     b.ToTable("Matches");
                 });
@@ -62,13 +67,19 @@ namespace TicketManagementApi.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -111,6 +122,9 @@ namespace TicketManagementApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("TicketNumber")
                         .HasColumnType("int");
 
@@ -118,6 +132,10 @@ namespace TicketManagementApi.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TicketTypeId");
 
                     b.ToTable("Tickets");
                 });
@@ -139,12 +157,15 @@ namespace TicketManagementApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MatchId");
 
                     b.ToTable("TicketTypes");
                 });
@@ -181,6 +202,83 @@ namespace TicketManagementApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.Match", b =>
+                {
+                    b.HasOne("TicketManagementApi.Models.Stadium", "Stadium")
+                        .WithMany("Matches")
+                        .HasForeignKey("StadiumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Stadium");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.Order", b =>
+                {
+                    b.HasOne("TicketManagementApi.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.Ticket", b =>
+                {
+                    b.HasOne("TicketManagementApi.Models.Order", "Order")
+                        .WithMany("Tickets")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TicketManagementApi.Models.TicketType", "TicketType")
+                        .WithMany("Tickets")
+                        .HasForeignKey("TicketTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("TicketType");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.TicketType", b =>
+                {
+                    b.HasOne("TicketManagementApi.Models.Match", "Match")
+                        .WithMany("TicketTypes")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Match");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.Match", b =>
+                {
+                    b.Navigation("TicketTypes");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.Order", b =>
+                {
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.Stadium", b =>
+                {
+                    b.Navigation("Matches");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.TicketType", b =>
+                {
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TicketManagementApi.Models.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
