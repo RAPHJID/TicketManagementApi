@@ -17,6 +17,8 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 builder.Services.AddScoped<IMatch, MatchService>();
+builder.Services.AddScoped<IStadium, StadiumService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
