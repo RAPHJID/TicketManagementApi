@@ -13,7 +13,9 @@ namespace TicketManagementApi.Mapping
             CreateMap<Match, MatchDto>();
             CreateMap<CreateUpdateStadiumDto, Stadium>();
             CreateMap<Stadium, StadiumDto>();
-            
+            CreateMap<CreateTicketDto, Ticket>();
+            CreateMap<UpdateTicketDto, Ticket>();
+            CreateMap<Ticket, TicketDto>();
 
         }
     }
