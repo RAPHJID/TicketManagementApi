@@ -4,7 +4,7 @@ namespace TicketManagementApi.Services.IServices
 {
     public interface IStadium
     {
-        Task<StadiumDto> GetAllStadiumsAsync();
+        Task<IEnumerable<StadiumDto>> GetAllStadiumsAsync();
         Task<StadiumDto> GetStadiumByIdAsync(Guid Id);
         Task<StadiumDto> CreateStadiumAsync(CreateUpdateStadiumDto dto);
         Task<StadiumDto> UpdateStadiumByIdAsync(CreateUpdateStadiumDto dto, Guid Id);

@@ -35,10 +35,10 @@ namespace TicketManagementApi.Services
             return false;
         }
 
-        public async Task<StadiumDto> GetAllStadiumsAsync()
+        public async Task<IEnumerable<StadiumDto>> GetAllStadiumsAsync()
         {
             var stadiums = await _context.Stadiums.ToListAsync();
-            return _mapper.Map<StadiumDto>(stadiums);
+            return _mapper.Map<IEnumerable<StadiumDto>>(stadiums);
         }
 
         public async Task<StadiumDto> GetStadiumByIdAsync(Guid Id)
